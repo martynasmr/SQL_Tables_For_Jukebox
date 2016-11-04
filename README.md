@@ -1,2 +1,47 @@
 # SQL_Tables_For_Jukebox
 SQL tables we used to store information about the songs
+
+CREATE TABLE Artist
+(
+ArtistID INT PRIMARY KEY IDENTITY,
+ArtistName VARCHAR(20),
+);
+CREATE TABLE Label
+(
+LabelID INT PRIMARY KEY IDENTITY,
+LabelName VARCHAR(20),
+);
+CREATE TABLE Album
+(
+AlbumID INT PRIMARY KEY IDENTITY,
+AlbumName VARCHAR(20),
+ArtistID INT,
+LabelID INT,
+CONSTRAINT fk_ArtistID FOREIGN KEY (ArtistID) REFERENCES Artist(ArtistID),
+CONSTRAINT fk_LabelID FOREIGN KEY (LabelID) REFERENCES Label(LabelID),
+);
+CREATE TABLE Song
+(
+SongID INT PRIMARY KEY IDENTITY,
+ArtistID INT,
+AlbumID INT,
+SongName VARCHAR(20),
+Genre CHAR(20),
+SongLength FLOAT,
+YearOfRelease DATE,
+CONSTRAINT fk_ArtistID2 FOREIGN KEY (ArtistID) REFERENCES Artist(ArtistID),
+CONSTRAINT fk_AlbumID2 FOREIGN KEY (AlbumID) REFERENCES Album(AlbumID),
+)
+CREATE TABLE Playlist_ID
+(
+PlaylistID INT PRIMARY KEY IDENTITY,
+PlaylistName VARCHAR(20),
+)
+CREATE TABLE Playlist
+(
+SongNumber INT PRIMARY KEY IDENTITY,
+PlaylistID INT,
+SongID INT,
+CONSTRAINT fk_PlaylistID FOREIGN KEY (PlaylistID) REFERENCES Playlist_ID(PlaylistID),
+CONSTRAINT fk_SongID FOREIGN KEY (SongID) REFERENCES Song(SongID),
+)
